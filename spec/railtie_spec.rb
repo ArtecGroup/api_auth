@@ -152,7 +152,7 @@ describe 'Rails integration' do
       ActiveResource::HttpMock.respond_to do |mock|
         mock.get '/test_resources/1.xml',
                  {
-                   'Authorization' => 'APIAuth 1044:LZ1jujf3x1nnGR70/208WPXdUHw=',
+                   'Authorization' => 'APIAuth 1044:IbTx7VzSOGU55HNbV4y2jZDnVis=',
                    'Accept' => 'application/xml',
                    'DATE' => 'Mon, 23 Jan 1984 03:29:56 GMT'
                  },
