@@ -114,7 +114,7 @@ module ApiAuth
 
     def auth_header(headers, access_id, secret_key, options)
       hmac_string = "-HMAC-#{options[:digest].upcase}" unless options[:digest] == 'sha1'
-      "APIAuth#{hmac_string} #{access_id}:#{hmac_signature(headers, secret_key, options, api_version: 1)}"
+      "APIAuth#{hmac_string} #{access_id}:#{hmac_signature(headers, secret_key, options, api_version: 2)}"
     end
 
     def parse_auth_header(auth_header)
