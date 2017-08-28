@@ -11,7 +11,7 @@ describe ApiAuth::Headers do
         let(:uri) { 'foo.com'.freeze }
 
         it 'adds / to canonical string' do
-          expect(subject.canonical_string(api_version: 2)).to eq('GET,,,/,')
+          expect(subject.canonical_string).to eq('GET,,,/,')
         end
       end
 
@@ -19,7 +19,7 @@ describe ApiAuth::Headers do
         let(:uri) { 'http://google.com'.freeze }
 
         it 'return / as canonical string path' do
-          expect(subject.canonical_string(api_version: 2)).to eq('GET,,,/,')
+          expect(subject.canonical_string).to eq('GET,,,/,')
         end
 
         it 'does not change request url (by removing host)' do
@@ -31,7 +31,7 @@ describe ApiAuth::Headers do
         let(:uri) { 'http://google.com/'.freeze }
 
         it 'return / as canonical string path' do
-          expect(subject.canonical_string(api_version: 2)).to eq('GET,,,/,')
+          expect(subject.canonical_string).to eq('GET,,,/,')
         end
 
         it 'does not change request url (by removing host)' do
@@ -56,14 +56,14 @@ describe ApiAuth::Headers do
 
         context 'when not passed an override' do
           it "constructs the canonical_string with the driver's http method" do
-            expect(headers.canonical_string).to eq 'text/html,12345,/foo,Mon, 23 Jan 1984 03:29:56 GMT'
+            expect(headers.canonical_string).to eq 'GET,text/html,12345,/foo,Mon, 23 Jan 1984 03:29:56 GMT'
           end
         end
 
         context 'when passed an override' do
           it 'constructs the canonical_string with the overridden http method' do
             expect(headers.canonical_string(override_method: 'put'))
-              .to eq 'text/html,12345,/foo,Mon, 23 Jan 1984 03:29:56 GMT'
+              .to eq 'PUT,text/html,12345,/foo,Mon, 23 Jan 1984 03:29:56 GMT'
           end
         end
       end
@@ -94,7 +94,7 @@ describe ApiAuth::Headers do
         context 'when passed an override' do
           it 'constructs the canonical_string with the overridden http method' do
             expect(headers.canonical_string(override_method: 'put'))
-              .to eq 'text/html,12345,/foo,Mon, 23 Jan 1984 03:29:56 GMT'
+              .to eq 'PUT,text/html,12345,/foo,Mon, 23 Jan 1984 03:29:56 GMT'
           end
         end
       end
@@ -119,7 +119,7 @@ describe ApiAuth::Headers do
 
         context 'the driver uses the original_uri' do
           it 'constructs the canonical_string with the original_uri' do
-            expect(headers.canonical_string(api_version: 2))
+            expect(headers.canonical_string)
               .to eq 'GET,text/html,12345,/api/resource.xml?foo=bar&bar=foo,Mon, 23 Jan 1984 03:29:56 GMT'
           end
         end

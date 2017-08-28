@@ -18,7 +18,7 @@ describe 'ApiAuth' do
   end
 
   def hmac(secret_key, request, canonical_string = nil, digest = 'sha1')
-    canonical_string ||= ApiAuth::Headers.new(request).canonical_string(api_version: 2)
+    canonical_string ||= ApiAuth::Headers.new(request).canonical_string
     digest = OpenSSL::Digest.new(digest)
     ApiAuth.b64_encode(OpenSSL::HMAC.digest(digest, secret_key, canonical_string))
   end
@@ -62,7 +62,7 @@ describe 'ApiAuth' do
                            'date' => Time.now.utc.httpdate)
       end
 
-      let(:canonical_string) { ApiAuth::Headers.new(request).canonical_string(api_version: 2) }
+      let(:canonical_string) { ApiAuth::Headers.new(request).canonical_string }
 
       it 'calculates the hmac_signature with http method' do
         ApiAuth.sign!(request, '1044', '123', digest: 'sha256')
